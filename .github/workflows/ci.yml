@@ -21,3 +21,4 @@ jobs:
         run: |
           echo "$GREETING"
           echo "Script executed by $AUTHOR"
+          bash main.sh
