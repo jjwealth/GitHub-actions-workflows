@@ -22,7 +22,7 @@ jobs:
 
   lint-script:
     runs-on: ubuntu-latest
-    needs: run-script  # This ensures linting runs only if run-script succeeds
+    needs: run-script
 
     steps:
       - name: Checkout code
