@@ -8,9 +8,16 @@ on:
 jobs:
   run-script:
     runs-on: ubuntu-latest
+
+    env:
+      GREETING: "Hello from GitHub Actions!"
+      AUTHOR: "Joshua"
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run Bash Script
-        run: bash main.sh
+      - name: Run script with environment variables
+        run: |
+          echo "$GREETING"
+          echo "Script executed by $AUTHOR"
