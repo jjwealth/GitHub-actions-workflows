@@ -61,7 +61,7 @@ jobs:
 
       - name: Validate output
         run: |
-          if [[ "${{ steps.run_script.outputs.output }}" == *"Hello from GitHub Actions!"* ]]; then
+          if [[ "${{ steps.run_script.outputs.output }}" == *"GitHub Actions Workflow Triggered Successfully!"* ]]; then
             echo "✅ Output is valid."
           else
             echo "❌ Output validation failed."

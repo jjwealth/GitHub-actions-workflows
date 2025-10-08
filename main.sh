@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "✅ GitHub Actions Workflow Triggered Successfully!"
+echo "GitHub Actions Workflow Triggered Successfully!"
