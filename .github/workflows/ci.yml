@@ -17,8 +17,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run script with environment variables
-        run: |
-          echo "$GREETING"
-          echo "Script executed by $AUTHOR"
-          bash main.sh
+      - name: Run main.sh with environment variables
+        run: bash main.sh
+
+  lint-script:
+    runs-on: ubuntu-latest
+    needs: run-script  # This ensures linting runs only if run-script succeeds
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install ShellCheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Lint main.sh
+        run: shellcheck main.sh
