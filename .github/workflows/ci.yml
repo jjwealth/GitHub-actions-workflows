@@ -8,6 +8,10 @@ on:
 jobs:
   run-script:
     runs-on: ubuntu-latest
+   
+    strategy:
+      matrix:
+       shell: [bash, sh]
 
     env:
       GREETING: "Hello from GitHub Actions!"
@@ -63,3 +67,6 @@ jobs:
         with:
           name: script-output
           path: output.txt
+
+
+
