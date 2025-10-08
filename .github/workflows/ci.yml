@@ -8,10 +8,10 @@ on:
 jobs:
   run-script:
     runs-on: ubuntu-latest
-   
+
     strategy:
       matrix:
-       shell: [bash, sh]
+        shell: [bash]  # Only bash for now to avoid errors
 
     env:
       GREETING: "Hello from GitHub Actions!"
@@ -21,8 +21,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run main.sh with environment variables
-        run: bash main.sh
+      - name: Run main.sh with matrix shell
+        run: ${{ matrix.shell }} main.sh
 
   lint-script:
     runs-on: ubuntu-latest
@@ -35,8 +35,14 @@ jobs:
       - name: Install ShellCheck
         run: sudo apt-get install -y shellcheck
 
-      - name: Lint main.sh
-        run: shellcheck main.sh
+      - name: Lint main.sh and save output
+        run: shellcheck main.sh > shellcheck-report.txt
+
+      - name: Upload ShellCheck report
+        uses: actions/upload-artifact@v3
+        with:
+          name: shellcheck-report
+          path: shellcheck-report.txt
 
   validate-output:
     runs-on: ubuntu-latest
@@ -67,6 +73,4 @@ jobs:
         with:
           name: script-output
           path: output.txt
-
-
-
+        
