@@ -33,3 +33,27 @@ jobs:
 
       - name: Lint main.sh
         run: shellcheck main.sh
+
+  validate-output:
+    runs-on: ubuntu-latest
+    needs: run-script
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run main.sh and capture output
+        id: run_script
+        run: |
+          OUTPUT=$(bash main.sh)
+          echo "$OUTPUT"
+          echo "output=$OUTPUT" >> $GITHUB_OUTPUT
+
+      - name: Validate output
+        run: |
+          if [[ "${{ steps.run_script.outputs.output }}" == *"Hello from GitHub Actions!"* ]]; then
+            echo "✅ Output is valid."
+          else
+            echo "❌ Output validation failed."
+            exit 1
+          fi
