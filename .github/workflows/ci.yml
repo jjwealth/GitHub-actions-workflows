@@ -46,7 +46,7 @@ jobs:
         id: run_script
         run: |
           OUTPUT=$(bash main.sh)
-          echo "$OUTPUT"
+          echo "$OUTPUT" > output.txt
           echo "output=$OUTPUT" >> $GITHUB_OUTPUT
 
       - name: Validate output
@@ -57,3 +57,9 @@ jobs:
             echo "❌ Output validation failed."
             exit 1
           fi
+
+      - name: Upload output artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: script-output
+          path: output.txt
