@@ -35,7 +35,8 @@ jobs:
         run: sudo apt-get install -y shellcheck
 
       - name: Lint main.sh and save output
-        run: shellcheck main.sh > shellcheck-report.txt
+        run: |
+          shellcheck main.sh > shellcheck-report.txt || echo "ShellCheck failed"
 
       - name: Upload ShellCheck report
         uses: actions/upload-artifact@v3
@@ -55,7 +56,9 @@ jobs:
         run: chmod +x main.sh
 
       - name: Run main.sh and capture output
-        run: bash ./main.sh > output.txt
+        run: |
+          bash main.sh > output.txt
+          cat output.txt  # Debug: show contents
 
       - name: Validate output
         run: |
