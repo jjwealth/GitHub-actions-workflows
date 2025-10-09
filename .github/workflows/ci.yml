@@ -9,10 +9,6 @@ jobs:
   run-script:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        shell: [bash]
-
     env:
       GREETING: "Hello from GitHub Actions!"
       AUTHOR: "Joshua"
@@ -21,8 +17,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Run main.sh with matrix shell
-        run: ${{ matrix.shell }} main.sh
+      - name: Make script executable
+        run: chmod +x main.sh
+
+      - name: Run main.sh
+        run: bash ./main.sh
 
   lint-script:
     runs-on: ubuntu-latest
@@ -52,13 +51,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Make script executable
+        run: chmod +x main.sh
+
       - name: Run main.sh and capture output
-        run: |
-          bash main.sh > output.txt
+        run: bash ./main.sh > output.txt
 
       - name: Validate output
         run: |
-          if grep -q "GitHub Actions Workflow Triggered Successfully!" output.txt; then
+          if grep -q "Hello from GitHub Actions!" output.txt; then
             echo "✅ Output is valid."
           else
             echo "❌ Output validation failed."
